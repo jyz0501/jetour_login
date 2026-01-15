@@ -69,9 +69,9 @@ jobs:
           allow_empty_commit: true
           # 清理旧文件
           force_orphan: true
-          # 仅部署必要文件
-          include_files:
-            - index.html
-            - sign-data.json
-            - auto-worker-results.json
-            - .nojekyll
+          # 仅部署必要文件（使用正确的 YAML 格式）
+          include_files: |
+            index.html
+            sign-data.json
+            auto-worker-results.json
+            .nojekyll
