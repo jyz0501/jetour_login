@@ -1,71 +1,203 @@
-# 捷途签到记录 REST 命令配置
-# 测试结果：HTTP请求成功，返回状态码200
-# 响应数据包含签到记录：signRecord="1121211211112111112111111111111"（1表示已签到，2表示补签）
+# 捷途 API 配置
+# 注意：敏感信息请通过环境变量或 GitHub Secrets 提供
 rest_command:
   jetour_sign_record:
     url: https://mobile-consumer.jetour.com.cn/web/task/sign/sign-record
     method: GET
     params:
-      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
-      taskId: "${{ secrets.JETOUR_TASK_ID }}"
-      monthInYear: "{{ now().strftime('%Y%m') }}"
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
+      taskId: "${{ JETOUR_TASK_ID || 'your-task-id' }}"
+      monthInYear: "${{ now().strftime('%Y%m') }}"
     headers:
       Host: "mobile-consumer.jetour.com.cn"
       Accept: "*/*"
-      Sec-Fetch-Site: "same-site"
       Accept-Encoding: "gzip, deflate, br"
       Accept-Language: "zh-CN,zh"
-      Sec-Fetch-Mode: "cors"
       Content-Type: "application/json"
       Origin: "https://h5-app.jetour.com.cn"
       Referer: "https://h5-app.jetour.com.cn/"
       Connection: "keep-alive"
       User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
-      Sec-Fetch-Dest: "empty"
     verify_ssl: true
     timeout: 30
-  
+
   jetour_sign_page:
     url: https://mobile-consumer.jetour.com.cn/web/task/sign/sign-page
     method: GET
     params:
-      access_token: "jTAd44hVSuVUFBe5iAIAaQAAAAAAAAAE"
-      taskId: "3439799346990943525"
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
+      taskId: "${{ JETOUR_TASK_ID || 'your-task-id' }}"
     headers:
       Host: "mobile-consumer.jetour.com.cn"
       Accept: "*/*"
-      Sec-Fetch-Site: "same-site"
       Accept-Encoding: "gzip, deflate, br"
       Accept-Language: "zh-CN,zh"
-      Sec-Fetch-Mode: "cors"
       Content-Type: "application/json"
       Origin: "https://h5-app.jetour.com.cn"
       Referer: "https://h5-app.jetour.com.cn/"
       Connection: "keep-alive"
       User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
-      Sec-Fetch-Dest: "empty"
     verify_ssl: true
     timeout: 30
-  
+
   jetour_task_load:
     url: https://mobile-consumer.jetour.com.cn/web/task/tasks/load-one
     method: GET
     params:
       sceneCode: "signInScene"
       terminal: "4"
-      access_token: "jTAd44hVSuVUFBe5iAIAaQAAAAAAAAAE"
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
     headers:
       Host: "mobile-consumer.jetour.com.cn"
       Accept: "*/*"
-      Sec-Fetch-Site: "same-site"
       Accept-Encoding: "gzip, deflate, br"
       Accept-Language: "zh-CN,zh"
-      Sec-Fetch-Mode: "cors"
       Content-Type: "application/json"
       Origin: "https://h5-app.jetour.com.cn"
       Referer: "https://h5-app.jetour.com.cn/"
       Connection: "keep-alive"
       User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
-      Sec-Fetch-Dest: "empty"
     verify_ssl: true
     timeout: 30
+
+  jetour_blind_box_count:
+    url: https://mobile-consumer.jetour.com.cn/web/rights/blind-box/user/count
+    method: GET
+    params:
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
+      taskId: "${{ JETOUR_TASK_ID || 'your-task-id' }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+    verify_ssl: true
+    timeout: 30
+
+  jetour_blind_box_detail:
+    url: https://mobile-consumer.jetour.com.cn/web/rights/blind-box/user/paging
+    method: GET
+    params:
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
+      taskId: "${{ JETOUR_TASK_ID || 'your-task-id' }}"
+      pageNum: "1"
+      pageSize: "10"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+    verify_ssl: true
+    timeout: 30
+
+  jetour_car_info:
+    url: https://mobile-consumer.jetour.com.cn/web/car-service/owner/vins
+    method: GET
+    params:
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+    verify_ssl: true
+    timeout: 30
+
+  jetour_member_detail:
+    url: https://mobile-consumer.jetour.com.cn/web/member/consumer/detail
+    method: GET
+    params:
+      encryptParam: "${{ JETOUR_ENCRYPT_PARAM || 'your-encrypt-param' }}"
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+    verify_ssl: true
+    timeout: 30
+
+  jetour_blind_box_receive:
+    url: https://mobile-consumer.jetour.com.cn/web/rights/blind-box/receive
+    method: PUT
+    params:
+      encryptParam: "${{ JETOUR_ENCRYPT_PARAM || 'your-encrypt-param' }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+      encryptFlag: "true"
+    data: "${{ JETOUR_BIND_BOX_DATA || 'your-blind-box-data' }}"
+    verify_ssl: true
+    timeout: 30
+
+  jetour_member_level:
+    url: https://mobile-consumer.jetour.com.cn/web/member/consumer/level
+    method: GET
+    params:
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
+      cardAccountId: "${{ JETOUR_CARD_ACCOUNT_ID || 'your-card-account-id' }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+    verify_ssl: true
+    timeout: 30
+
+  jetour_receive_rights:
+    url: https://mobile-consumer.jetour.com.cn/web/member/receiveRights
+    method: POST
+    params:
+      access_token: "${{ JETOUR_ACCESS_TOKEN || 'your-access-token' }}"
+      cardAccountId: "${{ JETOUR_CARD_ACCOUNT_ID || 'your-card-account-id' }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+    data:
+      rightsId: "${{ JETOUR_RIGHTS_ID || 'your-rights-id' }}"
+      rightsPackageId: "${{ JETOUR_RIGHTS_PACKAGE_ID || 'your-rights-package-id' }}"
+      rightsPackageCode: "${{ JETOUR_RIGHTS_PACKAGE_CODE || 'your-rights-package-code' }}"
+      number: 2
+      cardAccountId: "${{ JETOUR_CARD_ACCOUNT_ID || 'your-card-account-id' }}"
+    verify_ssl: true
+    timeout: 30
+    # 领取周期: 每1月仅可领取一次
