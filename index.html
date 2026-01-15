@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>捷途签到信息展示</title>
+    <title>捷途用户中心 - 综合仪表盘</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- 配置Tailwind自定义主题 -->
     <script>
         tailwind.config = {
@@ -15,6 +17,11 @@
                         primary: '#10b981',
                         secondary: '#3b82f6',
                         accent: '#f59e0b',
+                        dark: '#1f2937',
+                        light: '#f3f4f6'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                     },
                 }
             }
@@ -29,20 +36,33 @@
             .card-shadow {
                 box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             }
+            .gradient-bg {
+                background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen font-sans">
     <!-- 页面头部 -->
-    <header class="bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <h1 class="text-3xl font-bold text-gray-900 flex items-center">
-                <svg class="w-10 h-10 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
-                捷途签到信息展示
-            </h1>
-            <p class="text-gray-600 mt-1">自动提取并展示捷途每日签到信息</p>
+    <header class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h1 class="text-4xl font-bold text-shadow mb-2">捷途用户中心</h1>
+                    <p class="text-lg opacity-90">综合信息仪表盘</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center space-x-4">
+                            <div class="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
+                                <span class="font-medium">账号: ***********</span>
+                            </div>
+                    <button class="bg-white text-primary font-medium px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all">
+                        <i class="fa fa-refresh mr-2"></i>刷新数据
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -51,66 +71,61 @@
         <!-- 最后更新时间 -->
         <div class="bg-white rounded-lg p-4 card-shadow mb-6">
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-semibold text-gray-800">最后更新时间</h2>
+                <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                    <i class="fa fa-clock-o text-secondary mr-2"></i>
+                    最后更新时间
+                </h2>
                 <span id="last-update" class="text-sm text-gray-500">加载中...</span>
             </div>
         </div>
 
-        <!-- 签到概览卡片 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- 概览卡片 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <!-- 签到率 -->
-            <div class="bg-white rounded-lg p-6 card-shadow">
+            <div class="bg-white rounded-lg p-6 card-shadow hover:shadow-lg transition-all">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-gray-500">本月签到率</p>
-                        <h3 id="sign-rate" class="text-3xl font-bold text-primary mt-2">0%</h3>
+                        <h3 id="sign-rate" class="text-3xl font-bold text-primary mt-2">45.2%</h3>
                     </div>
                     <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                        </svg>
+                        <i class="fa fa-calendar-check-o text-primary text-xl"></i>
                     </div>
                 </div>
             </div>
-            <!-- 签到天数 -->
-            <div class="bg-white rounded-lg p-6 card-shadow">
+            <!-- 盲盒数量 -->
+            <div class="bg-white rounded-lg p-6 card-shadow hover:shadow-lg transition-all">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">签到天数</p>
-                        <h3 id="signed-days" class="text-3xl font-bold text-secondary mt-2">0</h3>
-                    </div>
-                    <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <!-- 补签天数 -->
-            <div class="bg-white rounded-lg p-6 card-shadow">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-500">补签天数</p>
-                        <h3 id="makeup-days" class="text-3xl font-bold text-accent mt-2">0</h3>
+                        <p class="text-sm font-medium text-gray-500">总盲盒数</p>
+                        <h3 id="blind-box-count" class="text-3xl font-bold text-accent mt-2">155</h3>
                     </div>
                     <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3M8 7a2 2 0 002 2h3a2 2 0 002-2M8 7a2 2 0 012-2h3a2 2 0 012 2m0 0h3M3 15h18M9 12h6"></path>
-                        </svg>
+                        <i class="fa fa-gift text-accent text-xl"></i>
                     </div>
                 </div>
             </div>
-            <!-- 连续签到 -->
-            <div class="bg-white rounded-lg p-6 card-shadow">
+            <!-- 成长值 -->
+            <div class="bg-white rounded-lg p-6 card-shadow hover:shadow-lg transition-all">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">连续签到</p>
-                        <h3 id="continuous-days" class="text-3xl font-bold text-purple-600 mt-2">0</h3>
+                        <p class="text-sm font-medium text-gray-500">成长值</p>
+                        <h3 id="growth-value" class="text-3xl font-bold text-secondary mt-2">1,769</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
+                        <i class="fa fa-line-chart text-secondary text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- 车辆数量 -->
+            <div class="bg-white rounded-lg p-6 card-shadow hover:shadow-lg transition-all">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">车辆数量</p>
+                        <h3 id="car-count" class="text-3xl font-bold text-purple-600 mt-2">2</h3>
                     </div>
                     <div class="w-12 h-12 bg-purple-600/10 rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
+                        <i class="fa fa-car text-purple-600 text-xl"></i>
                     </div>
                 </div>
             </div>
@@ -118,8 +133,11 @@
 
         <!-- 签到记录 -->
         <div class="bg-white rounded-lg p-6 card-shadow mb-8">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">本月签到记录</h2>
-            <div class="grid grid-cols-7 gap-2">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fa fa-calendar text-primary mr-2"></i>
+                签到记录
+            </h2>
+            <div class="grid grid-cols-7 gap-2 mb-6">
                 <!-- 星期标题 -->
                 <div class="text-center text-sm font-medium text-gray-500 py-2">日</div>
                 <div class="text-center text-sm font-medium text-gray-500 py-2">一</div>
@@ -129,111 +147,438 @@
                 <div class="text-center text-sm font-medium text-gray-500 py-2">五</div>
                 <div class="text-center text-sm font-medium text-gray-500 py-2">六</div>
                 
-                <!-- 签到记录将通过JS动态生成 -->
+                <!-- 签到日历 -->
                 <div id="sign-calendar" class="grid grid-cols-7 gap-2 mt-2">
-                    <!-- 占位符 -->
-                    <div class="text-center py-3 text-sm text-gray-400">加载中...</div>
+                    <!-- 日期格子将通过JS动态生成 -->
+                </div>
+            </div>
+            <div class="flex justify-between items-center text-sm text-gray-500">
+                <div>
+                    <span class="inline-block w-3 h-3 bg-primary rounded-full mr-1"></span>正常签到
+                    <span class="inline-block w-3 h-3 bg-accent rounded-full mr-1 ml-4"></span>补签
+                    <span class="inline-block w-3 h-3 bg-gray-200 rounded-full mr-1 ml-4"></span>未签到
+                </div>
+                <div>
+                    <span class="font-medium">查询月份: </span>
+                    <select id="month-select" class="border rounded px-2 py-1 text-sm">
+                        <option value="202601">2026年1月</option>
+                        <option value="202512">2025年12月</option>
+                        <option value="202511">2025年11月</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <!-- 签到规则 -->
+        <!-- 盲盒信息 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- 盲盒统计 -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i class="fa fa-gift text-accent mr-2"></i>
+                    盲盒统计
+                </h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center pb-2 border-b">
+                        <span class="text-gray-600">总盲盒数</span>
+                        <span class="font-semibold text-lg">155</span>
+                    </div>
+                    <div class="flex justify-between items-center pb-2 border-b">
+                        <span class="text-gray-600">已拆盲盒数</span>
+                        <span class="font-semibold text-lg">129</span>
+                    </div>
+                    <div class="flex justify-between items-center pb-2 border-b">
+                        <span class="text-gray-600">未拆盲盒数</span>
+                        <span class="font-semibold text-lg">26</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">拆盒率</span>
+                        <span class="font-semibold text-lg text-accent">83.2%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近盲盒 -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i class="fa fa-history text-secondary mr-2"></i>
+                    最近盲盒
+                </h2>
+                <div class="space-y-3" id="recent-blind-boxes">
+                    <!-- 盲盒列表将通过JS动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 车辆信息 -->
         <div class="bg-white rounded-lg p-6 card-shadow mb-8">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">签到规则</h2>
-            <div id="sign-rules" class="prose max-w-none">
-                <p class="text-gray-600">加载中...</p>
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fa fa-car text-purple-600 mr-2"></i>
+                车辆信息
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 车辆1 -->
+                <div class="border rounded-lg p-4 hover:border-primary transition-all">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-medium text-lg mb-2">车辆 1</h3>
+                            <div class="space-y-2 text-sm">
+                                <div><span class="text-gray-600">VIN码: </span><span class="font-mono">HEVPBECB0RB440183</span></div>
+                                <div><span class="text-gray-600">状态: </span><span class="text-green-600"><i class="fa fa-check-circle"></i> 正常</span></div>
+                                <div><span class="text-gray-600">关联会员: </span><span>旅行自由客</span></div>
+                            </div>
+                        </div>
+                        <button class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/20 transition-all">
+                            查看详情
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 车辆2 -->
+                <div class="border rounded-lg p-4 hover:border-primary transition-all">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-medium text-lg mb-2">车辆 2</h3>
+                            <div class="space-y-2 text-sm">
+                                <div><span class="text-gray-600">VIN码: </span><span class="font-mono">LNNEDDFS7SDE67270</span></div>
+                                <div><span class="text-gray-600">状态: </span><span class="text-green-600"><i class="fa fa-check-circle"></i> 正常</span></div>
+                                <div><span class="text-gray-600">关联会员: </span><span>旅行自由客</span></div>
+                            </div>
+                        </div>
+                        <button class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/20 transition-all">
+                            查看详情
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 奖励信息 -->
+        <!-- 权益卡信息 -->
+        <div class="bg-white rounded-lg p-6 card-shadow mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fa fa-id-card text-blue-600 mr-2"></i>
+                权益卡信息
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 旅行自由客补签卡 -->
+                <div class="border rounded-lg p-4 hover:border-blue-600 transition-all">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-medium text-lg mb-2">旅行自由客补签卡</h3>
+                            <div class="space-y-2 text-sm">
+                                <div><span class="text-gray-600">权益ID: </span><span>3612257299131322053</span></div>
+                                <div><span class="text-gray-600">权益包代码: </span><span>3612257299131322058</span></div>
+                                <div><span class="text-gray-600">数量: </span><span class="font-semibold text-blue-600">2</span></div>
+                                <div><span class="text-gray-600">领取周期: </span><span>每1个月1次</span></div>
+                                <div><span class="text-gray-600">状态: </span><span class="text-green-600">可用</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fa fa-calendar-check-o text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 用户信息 -->
+        <div class="bg-white rounded-lg p-6 card-shadow mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fa fa-user text-secondary mr-2"></i>
+                用户信息
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 基本信息 -->
+                <div class="col-span-1">
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-medium text-lg mb-3">基本信息</h3>
+                        <div class="space-y-2 text-sm">
+                            <div><span class="text-gray-600">账号ID: </span><span>6058493484338380905</span></div>
+                            <div><span class="text-gray-600">手机号: </span><span>18663531366</span></div>
+                            <div><span class="text-gray-600">注册时间: </span><span>2025-01-01</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 会员信息 -->
+                <div class="col-span-1">
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-medium text-lg mb-3">会员信息</h3>
+                        <div class="space-y-2 text-sm">
+                            <div><span class="text-gray-600">会员等级: </span><span class="font-semibold text-primary">旅行自由客</span></div>
+                            <div><span class="text-gray-600">成长值: </span><span>1,769</span></div>
+                            <div><span class="text-gray-600">距离下一等级: </span><span>231</span></div>
+                            <div><span class="text-gray-600">等级排序: </span><span>2</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 成长进度 -->
+                <div class="col-span-1">
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-medium text-lg mb-3">成长进度</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>成长值</span>
+                                    <span>1,769/2,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-primary h-2.5 rounded-full" style="width: 88.45%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>本月签到</span>
+                                    <span>12/31</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-accent h-2.5 rounded-full" style="width: 38.7%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>盲盒开启</span>
+                                    <span>129/155</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-purple-500 h-2.5 rounded-full" style="width: 83.2%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API测试 -->
         <div class="bg-white rounded-lg p-6 card-shadow">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">奖励信息</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 单次奖励 -->
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <h3 class="font-medium text-gray-700 mb-2">单次签到奖励</h3>
-                    <div id="single-reward" class="text-gray-600">加载中...</div>
-                </div>
-                <!-- 下一阶段奖励 -->
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <h3 class="font-medium text-gray-700 mb-2">下一阶段奖励</h3>
-                    <div id="next-reward" class="text-gray-600">加载中...</div>
-                </div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fa fa-code text-gray-600 mr-2"></i>
+                API测试
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">API名称</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">签到记录</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/task/sign/sign-record
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">签到页面</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/task/sign/sign-page
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">任务信息</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/task/tasks/load-one
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">盲盒计数</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/rights/blind-box/user/count
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">盲盒详情</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/rights/blind-box/user/paging
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">车辆信息</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/car-service/owner/vins
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">用户详情</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/member/consumer/detail
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">会员等级</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/member/consumer/level
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">领取权益</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    正常
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                                /web/member/receiveRights
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-primary hover:text-primary-dark">测试</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
 
     <!-- 页面底部 -->
-    <footer class="bg-white shadow-inner mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="text-center text-sm text-gray-500">
-                <p>捷途签到信息自动提取与展示 © 2026</p>
-                <p class="mt-1">数据每24小时自动更新</p>
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">捷途用户中心</h3>
+                    <p class="text-gray-400">综合信息仪表盘，整合签到、盲盒、车辆和用户信息，为您提供一站式的捷途汽车服务体验。</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors"><i class="fa fa-angle-right mr-2"></i>签到中心</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors"><i class="fa fa-angle-right mr-2"></i>盲盒活动</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors"><i class="fa fa-angle-right mr-2"></i>车辆管理</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors"><i class="fa fa-angle-right mr-2"></i>会员中心</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fa fa-phone mr-2"></i>400-888-8888</li>
+                        <li><i class="fa fa-envelope mr-2"></i>service@jetour.com</li>
+                        <li><i class="fa fa-map-marker mr-2"></i>安徽省芜湖市经济技术开发区</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 捷途汽车. 保留所有权利.</p>
             </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
     <script>
-        // 加载签到数据
-        async function loadSignData() {
-            try {
-                // 请求JSON数据
-                const response = await fetch('sign-data.json');
-                if (!response.ok) {
-                    throw new Error('数据加载失败');
-                }
-                const data = await response.json();
-                
-                // 更新页面数据
-                updatePage(data);
-            } catch (error) {
-                console.error('加载数据出错:', error);
-                document.getElementById('last-update').textContent = '数据加载失败';
+        // 模拟数据
+        const mockData = {
+            lastUpdate: new Date().toLocaleString('zh-CN'),
+            signStats: {
+                totalDays: 31,
+                signedDays: 12,
+                makeupDays: 2,
+                missedDays: 17,
+                signRate: 45.2
+            },
+            signRecord: "1111112121111010nnnnnnnnnnnnnnn",
+            blindBox: {
+                total: 155,
+                opened: 129,
+                unopened: 26
+            },
+            recentBlindBoxes: [
+                { id: "6250376501831145840", name: "1月惊喜盲盒", date: "2026-01-15", status: "已拆" },
+                { id: "6250376501831131949", name: "1月惊喜盲盒", date: "2026-01-14", status: "已拆" },
+                { id: "6250374508966292966", name: "1月惊喜盲盒", date: "2026-01-13", status: "已拆" },
+                { id: "6250374474606557261", name: "1月惊喜盲盒", date: "2026-01-12", status: "已拆" }
+            ],
+            cars: [
+                { vin: "HEVPBECB0RB440183", status: "正常" },
+                { vin: "LNNEDDFS7SDE67270", status: "正常" }
+            ],
+            userInfo: {
+                accountId: "6058493484338380905",
+                mobile: "18663531366",
+                growth: 1769,
+                levelName: "旅行自由客",
+                levelOrder: 2,
+                nextRiseValue: 2000
             }
-        }
+        };
 
-        // 更新页面内容
-        function updatePage(data) {
+        // 初始化页面
+        function initPage() {
             // 更新最后更新时间
-            const now = new Date();
-            document.getElementById('last-update').textContent = now.toLocaleString('zh-CN');
-            
-            // 更新概览数据
-            document.getElementById('sign-rate').textContent = data.signStats.signRate + '%';
-            document.getElementById('signed-days').textContent = data.signStats.signedDays;
-            document.getElementById('makeup-days').textContent = data.signStats.makeupDays;
-            document.getElementById('continuous-days').textContent = data.rewardInfo.continuousDays;
+            document.getElementById('last-update').textContent = mockData.lastUpdate;
             
             // 生成签到日历
-            generateSignCalendar(data.signRecord);
+            generateSignCalendar(mockData.signRecord);
             
-            // 更新签到规则
-            document.getElementById('sign-rules').innerHTML = data.taskInfo.taskRuleDesc;
-            
-            // 更新奖励信息
-            document.getElementById('single-reward').innerHTML = `
-                <div class="flex items-center space-x-4">
-                    <span class="font-medium">积分奖励: </span>
-                    <span class="text-primary">${data.rewardInfo.pointReward}捷途币</span>
-                    <span class="font-medium">会员积分: </span>
-                    <span class="text-primary">${data.rewardInfo.memberReward}旅行值</span>
-                </div>
-            `;
-            
-            // 更新下一阶段奖励
-            const nextReward = data.rewardInfo.nextStageReward;
-            if (nextReward) {
-                document.getElementById('next-reward').innerHTML = `
-                    <div class="space-y-2">
-                        <div><span class="font-medium">需要连续签到: </span><span class="text-accent">${nextReward.needContinuousDays}天</span></div>
-                        <div><span class="font-medium">可获得积分: </span><span class="text-primary">${nextReward.pointReward}捷途币</span></div>
-                        <div><span class="font-medium">可获得会员积分: </span><span class="text-primary">${nextReward.memberReward}旅行值</span></div>
-                    </div>
-                `;
-            } else {
-                document.getElementById('next-reward').textContent = '暂无下一阶段奖励';
-            }
+            // 生成最近盲盒
+            generateRecentBlindBoxes(mockData.recentBlindBoxes);
         }
 
         // 生成签到日历
@@ -241,7 +586,6 @@
             const calendar = document.getElementById('sign-calendar');
             calendar.innerHTML = '';
             
-            // 生成日期格子
             for (let i = 0; i < signRecord.length; i++) {
                 const day = i + 1;
                 const status = signRecord[i];
@@ -288,8 +632,45 @@
             }
         }
 
-        // 页面加载时执行
-        window.addEventListener('DOMContentLoaded', loadSignData);
+        // 生成最近盲盒
+        function generateRecentBlindBoxes(blindBoxes) {
+            const container = document.getElementById('recent-blind-boxes');
+            container.innerHTML = '';
+            
+            blindBoxes.forEach(box => {
+                const boxElement = document.createElement('div');
+                boxElement.className = 'flex justify-between items-center p-3 border rounded-lg hover:border-primary transition-all';
+                boxElement.innerHTML = `
+                    <div>
+                        <h4 class="font-medium">${box.name}</h4>
+                        <p class="text-sm text-gray-500">${box.date}</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-sm font-medium ${box.status === '已拆' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                        ${box.status}
+                    </span>
+                `;
+                container.appendChild(boxElement);
+            });
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initPage);
+
+        // 月份选择事件
+        document.getElementById('month-select').addEventListener('change', function(e) {
+            const month = e.target.value;
+            console.log('切换到月份:', month);
+            // 这里可以添加切换月份的逻辑
+            alert('切换到月份: ' + month);
+        });
+
+        // 刷新按钮事件
+        document.querySelector('button:has(.fa-refresh)').addEventListener('click', function() {
+            console.log('刷新数据');
+            // 这里可以添加刷新数据的逻辑
+            document.getElementById('last-update').textContent = new Date().toLocaleString('zh-CN');
+            alert('数据已刷新');
+        });
     </script>
 </body>
 </html>
