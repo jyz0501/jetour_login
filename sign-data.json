@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-01-15T22:37:49.264632",
+  "taskInfo": {
+    "id": "3439799346990943525",
+    "code": "qiaodao1",
+    "name": "签到",
+    "typeId": "4802841406316568222",
+    "typeName": null,
+    "description": "",
+    "taskRuleDesc": "<p><span style=\"font-size: 16px;\">1、APP每日签到将获得捷途币奖励。用户从自然周的星期一至星期六签到，每日可获得1捷途币，连续签到至星期日可获得2捷途币。</span></p>\n<p><span style=\"font-size: 16px;\">2、用户连续签到每满一周（自然周的星期一至星期日），将获得7旅行值奖励。</span></p>\n<p><span style=\"font-size: 16px;\">3、中途若中断签到（按北京时间计算），在不使用补签卡情况下，下次签到奖励从下个自然周的星期一开始计算。</span></p>",
+    "validityPeriodFlag": true,
+    "validityPeriodStart": null,
+    "validityPeriodEnd": null,
+    "terminalList": [
+      {
+        "entranceLimit": false,
+        "redirectUrl": "/package-mine/pages/sign-in/sign-in?isSignedIn=",
+        "terminalType": 4
+      },
+      {
+        "entranceLimit": false,
+        "redirectUrl": "",
+        "terminalType": 5
+      },
+      {
+        "entranceLimit": false,
+        "redirectUrl": "",
+        "terminalType": 2
+      }
+    ],
+    "joinCount": 1210719,
+    "icon": "https://chery-jtapp.obs.cn-east-3.myhuaweicloud.com/${obs.root.task}/任务中心图标.png",
+    "showFlag": false,
+    "ruleType": 4,
+    "rewardType": 1,
+    "operatorId": 5845704768999194698
+  },
+  "signRecord": "111111212111101nnnnnnnnnnnnnnnn",
+  "signStats": {
+    "totalDays": 31,
+    "signedDays": 12,
+    "makeupDays": 2,
+    "missedDays": 17,
+    "signRate": 45.2
+  },
+  "rewardInfo": {
+    "pointReward": 1,
+    "memberReward": 0,
+    "cycleType": 2,
+    "continuousDays": 1,
+    "nextStageReward": {
+      "start": 7,
+      "end": null,
+      "pointReward": 1,
+      "memberReward": 7,
+      "needContinuousDays": 6,
+      "status": 0
+    }
+  }
+}

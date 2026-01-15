@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>捷途签到信息展示</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 配置Tailwind自定义主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981',
+                        secondary: '#3b82f6',
+                        accent: '#f59e0b',
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- 自定义样式 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-shadow {
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- 页面头部 -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <h1 class="text-3xl font-bold text-gray-900 flex items-center">
+                <svg class="w-10 h-10 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                捷途签到信息展示
+            </h1>
+            <p class="text-gray-600 mt-1">自动提取并展示捷途每日签到信息</p>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 最后更新时间 -->
+        <div class="bg-white rounded-lg p-4 card-shadow mb-6">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-semibold text-gray-800">最后更新时间</h2>
+                <span id="last-update" class="text-sm text-gray-500">加载中...</span>
+            </div>
+        </div>
+
+        <!-- 签到概览卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- 签到率 -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">本月签到率</p>
+                        <h3 id="sign-rate" class="text-3xl font-bold text-primary mt-2">0%</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <!-- 签到天数 -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">签到天数</p>
+                        <h3 id="signed-days" class="text-3xl font-bold text-secondary mt-2">0</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <!-- 补签天数 -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">补签天数</p>
+                        <h3 id="makeup-days" class="text-3xl font-bold text-accent mt-2">0</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3M8 7a2 2 0 002 2h3a2 2 0 002-2M8 7a2 2 0 012-2h3a2 2 0 012 2m0 0h3M3 15h18M9 12h6"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <!-- 连续签到 -->
+            <div class="bg-white rounded-lg p-6 card-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">连续签到</p>
+                        <h3 id="continuous-days" class="text-3xl font-bold text-purple-600 mt-2">0</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-600/10 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 签到记录 -->
+        <div class="bg-white rounded-lg p-6 card-shadow mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">本月签到记录</h2>
+            <div class="grid grid-cols-7 gap-2">
+                <!-- 星期标题 -->
+                <div class="text-center text-sm font-medium text-gray-500 py-2">日</div>
+                <div class="text-center text-sm font-medium text-gray-500 py-2">一</div>
+                <div class="text-center text-sm font-medium text-gray-500 py-2">二</div>
+                <div class="text-center text-sm font-medium text-gray-500 py-2">三</div>
+                <div class="text-center text-sm font-medium text-gray-500 py-2">四</div>
+                <div class="text-center text-sm font-medium text-gray-500 py-2">五</div>
+                <div class="text-center text-sm font-medium text-gray-500 py-2">六</div>
+                
+                <!-- 签到记录将通过JS动态生成 -->
+                <div id="sign-calendar" class="grid grid-cols-7 gap-2 mt-2">
+                    <!-- 占位符 -->
+                    <div class="text-center py-3 text-sm text-gray-400">加载中...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 签到规则 -->
+        <div class="bg-white rounded-lg p-6 card-shadow mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">签到规则</h2>
+            <div id="sign-rules" class="prose max-w-none">
+                <p class="text-gray-600">加载中...</p>
+            </div>
+        </div>
+
+        <!-- 奖励信息 -->
+        <div class="bg-white rounded-lg p-6 card-shadow">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">奖励信息</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 单次奖励 -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <h3 class="font-medium text-gray-700 mb-2">单次签到奖励</h3>
+                    <div id="single-reward" class="text-gray-600">加载中...</div>
+                </div>
+                <!-- 下一阶段奖励 -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <h3 class="font-medium text-gray-700 mb-2">下一阶段奖励</h3>
+                    <div id="next-reward" class="text-gray-600">加载中...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页面底部 -->
+    <footer class="bg-white shadow-inner mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="text-center text-sm text-gray-500">
+                <p>捷途签到信息自动提取与展示 © 2026</p>
+                <p class="mt-1">数据每24小时自动更新</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 加载签到数据
+        async function loadSignData() {
+            try {
+                // 请求JSON数据
+                const response = await fetch('sign-data.json');
+                if (!response.ok) {
+                    throw new Error('数据加载失败');
+                }
+                const data = await response.json();
+                
+                // 更新页面数据
+                updatePage(data);
+            } catch (error) {
+                console.error('加载数据出错:', error);
+                document.getElementById('last-update').textContent = '数据加载失败';
+            }
+        }
+
+        // 更新页面内容
+        function updatePage(data) {
+            // 更新最后更新时间
+            const now = new Date();
+            document.getElementById('last-update').textContent = now.toLocaleString('zh-CN');
+            
+            // 更新概览数据
+            document.getElementById('sign-rate').textContent = data.signStats.signRate + '%';
+            document.getElementById('signed-days').textContent = data.signStats.signedDays;
+            document.getElementById('makeup-days').textContent = data.signStats.makeupDays;
+            document.getElementById('continuous-days').textContent = data.rewardInfo.continuousDays;
+            
+            // 生成签到日历
+            generateSignCalendar(data.signRecord);
+            
+            // 更新签到规则
+            document.getElementById('sign-rules').innerHTML = data.taskInfo.taskRuleDesc;
+            
+            // 更新奖励信息
+            document.getElementById('single-reward').innerHTML = `
+                <div class="flex items-center space-x-4">
+                    <span class="font-medium">积分奖励: </span>
+                    <span class="text-primary">${data.rewardInfo.pointReward}捷途币</span>
+                    <span class="font-medium">会员积分: </span>
+                    <span class="text-primary">${data.rewardInfo.memberReward}旅行值</span>
+                </div>
+            `;
+            
+            // 更新下一阶段奖励
+            const nextReward = data.rewardInfo.nextStageReward;
+            if (nextReward) {
+                document.getElementById('next-reward').innerHTML = `
+                    <div class="space-y-2">
+                        <div><span class="font-medium">需要连续签到: </span><span class="text-accent">${nextReward.needContinuousDays}天</span></div>
+                        <div><span class="font-medium">可获得积分: </span><span class="text-primary">${nextReward.pointReward}捷途币</span></div>
+                        <div><span class="font-medium">可获得会员积分: </span><span class="text-primary">${nextReward.memberReward}旅行值</span></div>
+                    </div>
+                `;
+            } else {
+                document.getElementById('next-reward').textContent = '暂无下一阶段奖励';
+            }
+        }
+
+        // 生成签到日历
+        function generateSignCalendar(signRecord) {
+            const calendar = document.getElementById('sign-calendar');
+            calendar.innerHTML = '';
+            
+            // 生成日期格子
+            for (let i = 0; i < signRecord.length; i++) {
+                const day = i + 1;
+                const status = signRecord[i];
+                
+                let statusClass = '';
+                let statusText = '';
+                let tooltip = '';
+                
+                switch (status) {
+                    case '1':
+                        statusClass = 'bg-primary text-white';
+                        statusText = '已签';
+                        tooltip = '正常签到';
+                        break;
+                    case '2':
+                        statusClass = 'bg-accent text-white';
+                        statusText = '补签';
+                        tooltip = '补签';
+                        break;
+                    case '0':
+                    case 'n':
+                        statusClass = 'bg-gray-200 text-gray-500';
+                        statusText = '未签';
+                        tooltip = '未签到';
+                        break;
+                    default:
+                        statusClass = 'bg-gray-100 text-gray-400';
+                        statusText = '未到';
+                        tooltip = '日期未到';
+                }
+                
+                const dayElement = document.createElement('div');
+                dayElement.className = `
+                    text-center py-3 rounded-lg font-medium cursor-help transition-all duration-200
+                    ${statusClass} hover:shadow-md hover:scale-105
+                `;
+                dayElement.title = tooltip;
+                dayElement.innerHTML = `
+                    <div class="text-sm">${day}</div>
+                    <div class="text-xs mt-1">${statusText}</div>
+                `;
+                
+                calendar.appendChild(dayElement);
+            }
+        }
+
+        // 页面加载时执行
+        window.addEventListener('DOMContentLoaded', loadSignData);
+    </script>
+</body>
+</html>
