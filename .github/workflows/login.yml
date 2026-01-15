@@ -54,8 +54,3 @@ jobs:
           allow_empty_commit: true
           # 清理旧文件
           force_orphan: true
-          # 仅部署必要文件
-          include_files:
-            - index.html
-            - sign-data.json
-            - .nojekyll
