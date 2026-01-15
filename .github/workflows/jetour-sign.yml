@@ -18,23 +18,30 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # 1. 检出代码仓库
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      # 1. 安装Git（如果需要）
+      - name: Install Git
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
       
-      # 2. 设置Python环境
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      # 2. 克隆代码仓库
+      - name: Clone Repository
+        run: |
+          git clone https://github.com/jyz0501/jetour_login.git .
+          git checkout main
       
-      # 3. 安装依赖
+      # 3. 检查Python版本
+      - name: Check Python Version
+        run: |
+          python3 --version
+      
+      # 4. 安装依赖
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install requests
+          python3 -m pip install --upgrade pip
+          pip3 install requests
       
-      # 4. 执行捷途自动工作脚本
+      # 5. 执行捷途自动工作脚本
       - name: Run Jetour Auto Worker
         env:
           # 从GitHub Secrets中获取敏感信息，直接传递给脚本
@@ -42,9 +49,9 @@ jobs:
           JETOUR_TASK_ID: ${{ secrets.JETOUR_TASK_ID }}
         run: |
           # 直接执行自动工作脚本
-          python jetour_auto_worker.py
+          python3 jetour_auto_worker.py
       
-      # 5. 执行信息提取脚本（用于更新仪表盘）
+      # 6. 执行信息提取脚本（用于更新仪表盘）
       - name: Run Jetour Sign Info Extractor
         env:
           # 从GitHub Secrets中获取敏感信息，直接传递给脚本
@@ -53,25 +60,4 @@ jobs:
           CARD_ACCOUNT_ID: ${{ secrets.JETOUR_CARD_ACCOUNT_ID }}
         run: |
           # 执行信息提取脚本，用于更新仪表盘数据
-          python extract_jetour_sign_info.py
-      
-      # 6. 部署到GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          # 使用GitHub Secrets中的GITHUB_TOKEN
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # 部署目录（当前目录下的所有文件）
-          publish_dir: .
-          # 部署分支
-          publish_branch: gh-pages
-          # 允许空提交
-          allow_empty_commit: true
-          # 清理旧文件
-          force_orphan: true
-          # 仅部署必要文件（使用正确的 YAML 格式）
-          include_files: |
-            index.html
-            sign-data.json
-            auto-worker-results.json
-            .nojekyll
+          python3 extract_jetour_sign_info.py
