@@ -1,0 +1,71 @@
+# 捷途签到记录 REST 命令配置
+# 测试结果：HTTP请求成功，返回状态码200
+# 响应数据包含签到记录：signRecord="1121211211112111112111111111111"（1表示已签到，2表示补签）
+rest_command:
+  jetour_sign_record:
+    url: https://mobile-consumer.jetour.com.cn/web/task/sign/sign-record
+    method: GET
+    params:
+      access_token: "jTAd44hVSuVUFBe5iAIAaQAAAAAAAAAE"
+      taskId: "3439799346990943525"
+      monthInYear: "{{ now().strftime('%Y%m') }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Sec-Fetch-Site: "same-site"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Sec-Fetch-Mode: "cors"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+      Sec-Fetch-Dest: "empty"
+    verify_ssl: true
+    timeout: 30
+  
+  jetour_sign_page:
+    url: https://mobile-consumer.jetour.com.cn/web/task/sign/sign-page
+    method: GET
+    params:
+      access_token: "jTAd44hVSuVUFBe5iAIAaQAAAAAAAAAE"
+      taskId: "3439799346990943525"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Sec-Fetch-Site: "same-site"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Sec-Fetch-Mode: "cors"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+      Sec-Fetch-Dest: "empty"
+    verify_ssl: true
+    timeout: 30
+  
+  jetour_task_load:
+    url: https://mobile-consumer.jetour.com.cn/web/task/tasks/load-one
+    method: GET
+    params:
+      sceneCode: "signInScene"
+      terminal: "4"
+      access_token: "jTAd44hVSuVUFBe5iAIAaQAAAAAAAAAE"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Sec-Fetch-Site: "same-site"
+      Accept-Encoding: "gzip, deflate, br"
+      Accept-Language: "zh-CN,zh"
+      Sec-Fetch-Mode: "cors"
+      Content-Type: "application/json"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
+      Sec-Fetch-Dest: "empty"
+    verify_ssl: true
+    timeout: 30
