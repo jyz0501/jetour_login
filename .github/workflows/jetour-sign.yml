@@ -57,7 +57,29 @@ jobs:
           # 从GitHub Secrets中获取敏感信息，直接传递给脚本
           ACCESS_TOKEN: ${{ secrets.JETOUR_ACCESS_TOKEN }}
           TASK_ID: ${{ secrets.JETOUR_TASK_ID }}
-          CARD_ACCOUNT_ID: ${{ secrets.JETOUR_CARD_ACCOUNT_ID }}
         run: |
           # 执行信息提取脚本，用于更新仪表盘数据
           python3 extract_jetour_sign_info.py
+      
+      # 7. 提交和推送更新的数据文件
+      - name: Commit and Push Updated Data
+        run: |
+          # 配置Git用户信息
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+          # 检查文件是否有变化
+          if git status | grep -q "sign-data.json"; then
+            # 添加变更的文件
+            git add sign-data.json auto-worker-results.json
+            
+            # 提交变更
+            git commit -m "Update sign data: $(date +'%Y-%m-%d %H:%M:%S')"
+            
+            # 推送变更
+            # 使用GitHub令牌进行认证
+            git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/jyz0501/jetour_login.git
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
