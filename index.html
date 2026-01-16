@@ -256,9 +256,9 @@
                         <div>
                             <h3 class="font-medium text-lg mb-2">车辆 1</h3>
                             <div class="space-y-2 text-sm">
-                                <div><span class="text-gray-600">VIN码: </span><span class="font-mono">HEVPBECB0RB440183</span></div>
-                                <div><span class="text-gray-600">状态: </span><span class="text-green-600"><i class="fa fa-check-circle"></i> 正常</span></div>
-                                <div><span class="text-gray-600">关联会员: </span><span>旅行自由客</span></div>
+                                <div><span class="text-gray-600">VIN码: </span><span class="font-mono">加载中...</span></div>
+                                <div><span class="text-gray-600">状态: </span><span>加载中...</span></div>
+                                <div><span class="text-gray-600">关联会员: </span><span>加载中...</span></div>
                             </div>
                         </div>
                         <button class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/20 transition-all">
@@ -273,9 +273,9 @@
                         <div>
                             <h3 class="font-medium text-lg mb-2">车辆 2</h3>
                             <div class="space-y-2 text-sm">
-                                <div><span class="text-gray-600">VIN码: </span><span class="font-mono">LNNEDDFS7SDE67270</span></div>
-                                <div><span class="text-gray-600">状态: </span><span class="text-green-600"><i class="fa fa-check-circle"></i> 正常</span></div>
-                                <div><span class="text-gray-600">关联会员: </span><span>旅行自由客</span></div>
+                                <div><span class="text-gray-600">VIN码: </span><span class="font-mono">加载中...</span></div>
+                                <div><span class="text-gray-600">状态: </span><span>加载中...</span></div>
+                                <div><span class="text-gray-600">关联会员: </span><span>加载中...</span></div>
                             </div>
                         </div>
                         <button class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/20 transition-all">
@@ -303,7 +303,6 @@
                                 <div><span class="text-gray-600">权益包代码: </span><span>3612257299131322058</span></div>
                                 <div><span class="text-gray-600">数量: </span><span class="font-semibold text-blue-600">2</span></div>
                                 <div><span class="text-gray-600">领取周期: </span><span>每1个月1次</span></div>
-                                <div><span class="text-gray-600">状态: </span><span class="text-green-600">可用</span></div>
                             </div>
                         </div>
                         <div class="bg-blue-100 p-3 rounded-full">
@@ -315,7 +314,7 @@
         </div>
 
         <!-- 用户信息 -->
-        <div class="bg-white rounded-lg p-6 card-shadow mb-8">
+        <div id="user-info" class="bg-white rounded-lg p-6 card-shadow mb-8">
             <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                 <i class="fa fa-user text-secondary mr-2"></i>
                 用户信息
@@ -326,9 +325,9 @@
                     <div class="border rounded-lg p-4">
                         <h3 class="font-medium text-lg mb-3">基本信息</h3>
                         <div class="space-y-2 text-sm">
-                            <div><span class="text-gray-600">账号ID: </span><span>6058493484338380905</span></div>
-                            <div><span class="text-gray-600">手机号: </span><span>18663531366</span></div>
-                            <div><span class="text-gray-600">注册时间: </span><span>2025-01-01</span></div>
+                            <div><span class="text-gray-600">账号ID: </span><span>加载中...</span></div>
+                            <div><span class="text-gray-600">手机号: </span><span>加载中...</span></div>
+                            <div><span class="text-gray-600">注册时间: </span><span>加载中...</span></div>
                         </div>
                     </div>
                 </div>
@@ -338,10 +337,10 @@
                     <div class="border rounded-lg p-4">
                         <h3 class="font-medium text-lg mb-3">会员信息</h3>
                         <div class="space-y-2 text-sm">
-                            <div><span class="text-gray-600">会员等级: </span><span class="font-semibold text-primary">旅行自由客</span></div>
-                            <div><span class="text-gray-600">成长值: </span><span>1,769</span></div>
-                            <div><span class="text-gray-600">距离下一等级: </span><span>231</span></div>
-                            <div><span class="text-gray-600">等级排序: </span><span>2</span></div>
+                            <div><span class="text-gray-600">会员等级: </span><span>加载中...</span></div>
+                            <div><span class="text-gray-600">成长值: </span><span>加载中...</span></div>
+                            <div><span class="text-gray-600">捷途币: </span><span>加载中...</span></div>
+                            <div><span class="text-gray-600">距离下一等级: </span><span>加载中...</span></div>
                         </div>
                     </div>
                 </div>
@@ -421,52 +420,140 @@
 
     <!-- JavaScript -->
     <script>
-        // 模拟数据
-        const mockData = {
-            lastUpdate: new Date().toLocaleString('zh-CN'),
-            signStats: {
-                totalDays: 31,
-                signedDays: 12,
-                makeupDays: 2,
-                missedDays: 17,
-                signRate: 45.2
-            },
-            signRecord: "1111112121111010nnnnnnnnnnnnnnn",
-            blindBox: {
-                total: 155,
-                opened: 129,
-                unopened: 26
-            },
-            recentBlindBoxes: [
-                { id: "6250376501831145840", name: "1月惊喜盲盒", date: "2026-01-15", status: "已拆" },
-                { id: "6250376501831131949", name: "1月惊喜盲盒", date: "2026-01-14", status: "已拆" },
-                { id: "6250374508966292966", name: "1月惊喜盲盒", date: "2026-01-13", status: "已拆" },
-                { id: "6250374474606557261", name: "1月惊喜盲盒", date: "2026-01-12", status: "已拆" }
-            ],
-            cars: [
-                { vin: "HEVPBECB0RB440183", status: "正常" },
-                { vin: "LNNEDDFS7SDE67270", status: "正常" }
-            ],
-            userInfo: {
-                accountId: "6058493484338380905",
-                mobile: "18663531366",
-                growth: 1769,
-                levelName: "旅行自由客",
-                levelOrder: 2,
-                nextRiseValue: 2000
+        // 从API获取数据
+        async function fetchData() {
+            try {
+                // 从sign-data.json获取数据（由extract_jetour_sign_info.py生成）
+                const response = await fetch('sign-data.json');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                // 返回默认数据作为 fallback
+                return {
+                    lastUpdate: new Date().toLocaleString('zh-CN'),
+                    signStats: {
+                        totalDays: 31,
+                        signedDays: 0,
+                        makeupDays: 0,
+                        missedDays: 31,
+                        signRate: 0
+                    },
+                    signRecord: Array(31).fill('n').join(''),
+                    blindBox: {
+                        total: 0,
+                        opened: 0,
+                        unopened: 0
+                    },
+                    recentBlindBoxes: [],
+                    cars: [],
+                    userInfo: {
+                        accountId: "N/A",
+                        mobile: "N/A",
+                        growth: 0,
+                        levelName: "旅行自由客",
+                        levelOrder: 1,
+                        nextRiseValue: 1000
+                    }
+                };
             }
-        };
+        }
 
         // 初始化页面
-        function initPage() {
+        async function initPage() {
+            // 显示加载状态
+            document.getElementById('last-update').textContent = '加载中...';
+            
+            // 获取数据
+            const data = await fetchData();
+            
             // 更新最后更新时间
-            document.getElementById('last-update').textContent = mockData.lastUpdate;
+            document.getElementById('last-update').textContent = data.lastUpdate;
+            
+            // 更新概览数据
+            updateOverview(data);
             
             // 生成签到日历
-            generateSignCalendar(mockData.signRecord);
+            generateSignCalendar(data.signRecord);
             
             // 生成最近盲盒
-            generateRecentBlindBoxes(mockData.recentBlindBoxes);
+            generateRecentBlindBoxes(data.recentBlindBoxes);
+            
+            // 更新车辆信息
+            updateCars(data.cars);
+            
+            // 更新用户信息
+            updateUserInfo(data.userInfo);
+        }
+
+        // 更新概览数据
+        function updateOverview(data) {
+            // 更新签到率
+            document.getElementById('sign-rate').textContent = `${data.signStats.signRate}%`;
+            
+            // 更新盲盒数量
+            document.getElementById('blind-box-count').textContent = data.blindBox.total;
+            
+            // 更新成长值
+            document.getElementById('growth-value').textContent = data.userInfo.growth.toLocaleString();
+            
+            // 更新车辆数量
+            document.getElementById('car-count').textContent = data.cars.length;
+        }
+
+        // 更新用户信息
+        function updateUserInfo(userInfo) {
+            // 更新用户基本信息
+            const userInfoElements = document.querySelectorAll('#user-info .text-sm');
+            userInfoElements.forEach(element => {
+                if (element.textContent.includes('账号ID:')) {
+                    element.innerHTML = `<span class="text-gray-600">账号ID: </span><span>${userInfo.accountId}</span>`;
+                } else if (element.textContent.includes('手机号:')) {
+                    element.innerHTML = `<span class="text-gray-600">手机号: </span><span>${userInfo.mobile}</span>`;
+                } else if (element.textContent.includes('注册时间:')) {
+                    element.innerHTML = `<span class="text-gray-600">注册时间: </span><span>2025-01-01</span>`;
+                } else if (element.textContent.includes('会员等级:')) {
+                    element.innerHTML = `<span class="text-gray-600">会员等级: </span><span class="font-semibold text-primary">${userInfo.levelName} (${userInfo.levelOrder})</span>`;
+                } else if (element.textContent.includes('成长值:')) {
+                    element.innerHTML = `<span class="text-gray-600">成长值: </span><span>${userInfo.growth}</span>`;
+                } else if (element.textContent.includes('捷途币:')) {
+                    const jetourCoins = userInfo.jetourCoins || 0;
+                    element.innerHTML = `<span class="text-gray-600">捷途币: </span><span class="font-semibold text-yellow-600">${jetourCoins}</span>`;
+                } else if (element.textContent.includes('距离下一等级:')) {
+                    const distance = userInfo.nextRiseValue - userInfo.growth;
+                    element.innerHTML = `<span class="text-gray-600">距离下一等级: </span><span>${distance}</span>`;
+                }
+            });
+            
+            // 更新成长进度条
+            const growthProgress = document.querySelector('.bg-primary.h-2\\.5');
+            if (growthProgress) {
+                const progress = (userInfo.growth / userInfo.nextRiseValue) * 100;
+                growthProgress.style.width = `${Math.min(progress, 100)}%`;
+            }
+        }
+
+        // 更新车辆信息
+        function updateCars(cars) {
+            const carElements = document.querySelectorAll('.border.rounded-lg.p-4');
+            carElements.forEach((carElement, index) => {
+                if (index < cars.length) {
+                    const car = cars[index];
+                    const carInfoElements = carElement.querySelectorAll('.text-sm');
+                    carInfoElements.forEach(element => {
+                        if (element.textContent.includes('VIN码:')) {
+                            element.innerHTML = `<span class="text-gray-600">VIN码: </span><span class="font-mono">${car.vin}</span>`;
+                        } else if (element.textContent.includes('状态:')) {
+                            element.innerHTML = `<span class="text-gray-600">状态: </span><span class="text-green-600"><i class="fa fa-check-circle"></i> ${car.status}</span>`;
+                        } else if (element.textContent.includes('关联会员:')) {
+                            element.innerHTML = `<span class="text-gray-600">关联会员: </span><span>旅行自由客</span>`;
+                        }
+                    });
+                }
+            });
         }
 
         // 生成签到日历
