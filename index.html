@@ -148,7 +148,7 @@
                 <div class="text-center text-sm font-medium text-gray-500 py-2">六</div>
                 
                 <!-- 签到日历 -->
-                <div id="sign-calendar" class="grid grid-cols-7 gap-2 mt-2">
+                <div id="sign-calendar" class="grid grid-cols-7 gap-2 mt-2 w-full">
                     <!-- 日期格子将通过JS动态生成 -->
                 </div>
             </div>
@@ -621,7 +621,10 @@
                 dayElement.className = `
                     text-center py-3 rounded-lg font-medium cursor-help transition-all duration-200
                     ${statusClass} hover:shadow-md hover:scale-105
+                    flex flex-col items-center justify-center
                 `;
+                dayElement.style.width = 'calc(100% / 7)';
+                dayElement.style.minHeight = '80px';
                 dayElement.title = tooltip;
                 dayElement.innerHTML = `
                     <div class="text-sm">${day}</div>
