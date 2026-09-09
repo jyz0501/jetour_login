@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 运行产物(勿提交)
+state/
+*.jsonl
+run_*.json
+
+# 本地配置/凭据
+.env
+config.local.yaml
+token.txt
+
+# 旧抓包/调试产物
+api_test_results.json
+member_detail_response.json
+member_level_with_rights_response.json
+encrypted_api_response.json

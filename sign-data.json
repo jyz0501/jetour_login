@@ -1,60 +1,158 @@
 {
-  "timestamp": "2026-01-15T22:37:49.264632",
-  "taskInfo": {
-    "id": "3439799346990943525",
-    "code": "qiaodao1",
-    "name": "签到",
-    "typeId": "4802841406316568222",
-    "typeName": null,
-    "description": "",
-    "taskRuleDesc": "<p><span style=\"font-size: 16px;\">1、APP每日签到将获得捷途币奖励。用户从自然周的星期一至星期六签到，每日可获得1捷途币，连续签到至星期日可获得2捷途币。</span></p>\n<p><span style=\"font-size: 16px;\">2、用户连续签到每满一周（自然周的星期一至星期日），将获得7旅行值奖励。</span></p>\n<p><span style=\"font-size: 16px;\">3、中途若中断签到（按北京时间计算），在不使用补签卡情况下，下次签到奖励从下个自然周的星期一开始计算。</span></p>",
-    "validityPeriodFlag": true,
-    "validityPeriodStart": null,
-    "validityPeriodEnd": null,
-    "terminalList": [
+  "timestamp": "2026-09-09 10:10:31 CST",
+  "summary": {
+    "ranAt": "2026-09-09 10:10:31 CST",
+    "accounts": [
       {
-        "entranceLimit": false,
-        "redirectUrl": "/package-mine/pages/sign-in/sign-in?isSignedIn=",
-        "terminalType": 4
-      },
-      {
-        "entranceLimit": false,
-        "redirectUrl": "",
-        "terminalType": 5
-      },
-      {
-        "entranceLimit": false,
-        "redirectUrl": "",
-        "terminalType": 2
+        "name": "微信新号",
+        "date": "2026-09-09",
+        "time": "2026-09-09 10:10:30 CST",
+        "sign": {
+          "enabled": true,
+          "state": "already_signed",
+          "ok": true
+        },
+        "blindBox": {
+          "enabled": false,
+          "skipped": true,
+          "ok": true
+        },
+        "content": {
+          "enabled": true,
+          "share": {
+            "state": "already_done"
+          },
+          "read": {
+            "state": "already_done"
+          }
+        },
+        "stats": {
+          "totalDays": 30,
+          "signedDays": 1,
+          "makeupDays": 0,
+          "missedDays": 8,
+          "signRate": 3.3
+        },
+        "point": "148",
+        "ok": true,
+        "error": null,
+        "record": "000000001nnnnnnnnnnnnnnnnnnnnn"
       }
     ],
-    "joinCount": 1210719,
-    "icon": "https://chery-jtapp.obs.cn-east-3.myhuaweicloud.com/${obs.root.task}/任务中心图标.png",
-    "showFlag": false,
-    "ruleType": 4,
-    "rewardType": 1,
-    "operatorId": 5845704768999194698
+    "ok": true
   },
-  "signRecord": "111111212111101nnnnnnnnnnnnnnnn",
+  "taskInfo": {},
+  "taskRules": {},
+  "signRecord": "000000001nnnnnnnnnnnnnnnnnnnnn",
   "signStats": {
-    "totalDays": 31,
-    "signedDays": 12,
-    "makeupDays": 2,
-    "missedDays": 17,
-    "signRate": 45.2
+    "totalDays": 30,
+    "signedDays": 1,
+    "makeupDays": 0,
+    "missedDays": 8,
+    "signRate": 3.3
   },
   "rewardInfo": {
-    "pointReward": 1,
-    "memberReward": 0,
-    "cycleType": 2,
-    "continuousDays": 1,
-    "nextStageReward": {
-      "start": 7,
-      "end": null,
-      "pointReward": 1,
-      "memberReward": 7,
-      "needContinuousDays": 6,
-      "status": 0
-    }
+    "cycleDays": 1,
+    "pointReward": 1
+  },
+  "memberDetail": {
+    "id": "4527025993966216779",
+    "systemId": "1",
+    "accountId": "7084523216156360780",
+    "growth": 1045,
+    "expireDate": null,
+    "status": 1,
+    "createTime": 1757407247000,
+    "cardAccountList": [
+      {
+        "id": "4527025993966216781",
+        "memberAccountId": "4527025993966216779",
+        "systemId": "1",
+        "cardId": "1",
+        "accountId": "7084523216156360780",
+        "growth": null,
+        "levelId": "3528846285518899010",
+        "levelOrder": 2,
+        "levelName": "旅行自由客",
+        "reachLevelDate": 1769150525000,
+        "reachLevelType": 1,
+        "oldLevelId": "3528843639819036365",
+        "nextLevelId": "3528843639819036378",
+        "nextRiseValue": 2000,
+        "vin": "LNNBBDEL7SDN11462",
+        "isReminder": false,
+        "memberCard": {
+          "id": "1",
+          "name": "捷途用户成长",
+          "code": "jtyhcz",
+          "levelRule": 1,
+          "levelCycle": 0,
+          "levelCycleUnit": 3,
+          "riseConsume": 0,
+          "keepConsume": 0,
+          "description": "<p><img style=\"max-width: 700px;\" src=\"https://vr-jetour.jetour.com.cn/member/26年用户传播.jpg\" /><img style=\"max-width: 700px;\" src=\"https://vr-jetour.jetour.com.cn/member/用户口碑.jpg\" /><img style=\"max-width: 700px;\" src=\"https://vr-jetour.jetour.com.cn/member/用户组织.jpg\" /><img style=\"max-width: 700px;\" src=\"https://vr-jetour.jetour.com.cn/member/用户经营.jpg\" /><img style=\"max-width: 700px;\" src=\"https://vr-jetour.jetour.com.cn/member/用户共创.jpg\" /></p>",
+          "levelCycleDate": null,
+          "nextLevelDay": null
+        }
+      }
+    ]
+  },
+  "userDetail": {
+    "accountId": "7084523216156360780",
+    "displayName": "3131",
+    "avatarUrl": "https://chery-jtapp.obs.cn-east-3.myhuaweicloud.com/user/web2c/default_avatar/d694bab4-e625-48f3-8283-b2bc57e97343.jpg",
+    "birthday": 316800000,
+    "gender": 1,
+    "mobile": "19819383131",
+    "province": "北京市",
+    "provinceCode": "110000",
+    "city": "北京城区",
+    "cityCode": "110100",
+    "jetourer": true,
+    "lifetimer": false,
+    "adviser": null,
+    "contentCount": 0,
+    "collectCount": 1,
+    "followerCount": 0,
+    "topicCount": 0,
+    "fansCount": 0,
+    "userMedalDetail": null,
+    "taskFlag": false,
+    "todayCompleted": false,
+    "payableBalance": "148",
+    "growth": 1045,
+    "authLevel": null,
+    "autoClubCount": 0,
+    "blockCount": 0,
+    "isSockPuppet": false,
+    "tailLightIconUrl": null,
+    "isPurchase": false,
+    "showPurchase": false
+  },
+  "pointDetail": {
+    "id": "5137713478035350014",
+    "pointSystem": {
+      "id": "1",
+      "name": "捷途积分体系",
+      "status": 1,
+      "description": null
+    },
+    "payableBalance": "148",
+    "expiringPoint": null,
+    "accountId": "7084523216156360780",
+    "creatorId": null,
+    "createTime": 1757407247886,
+    "status": 1,
+    "forbiddenType": null
+  },
+  "blindBoxCount": {
+    "totalNum": 8,
+    "packedNum": 8,
+    "unpackedNum": 0
+  },
+  "boxCount": {
+    "totalNum": 8,
+    "packedNum": 8,
+    "unpackedNum": 0
   }
 }

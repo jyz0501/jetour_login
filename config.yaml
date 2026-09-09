@@ -1,0 +1,64 @@
+# =============================================================================
+# 捷途签到自动化 配置
+# =============================================================================
+# 敏感凭据(access_token)不要写进本文件:
+#   - 本地:  export JETOUR_ACCESS_TOKEN="..."   后运行 python main.py run
+#           或把 KEY=值 写入项目根 .env(已被 gitignore, 运行前自动读取)
+#   - 定时:  配置到 GitHub Secrets 同名变量(见 .github/workflows/jetour-sign.yml)
+# token 取值优先级: account.token > account.token_env 对应环境变量(含 .env) > JETOUR_ACCESS_TOKEN > ACCESS_TOKEN
+# =============================================================================
+
+timezone: Asia/Shanghai
+
+# 可选: 运行结果推送 webhook(Server酱 / PushPlus / 任意 POST JSON 服务)
+# 收到 JSON: {"title": ..., "desp": ..., "text": ...}
+notify_webhook: ""
+
+accounts:
+  - name: 主账号
+    phone: "18663531366"               # 用于面板匹配, 可不填
+    token_env: JETOUR_ACCESS_TOKEN     # 读取该环境变量作为 access_token
+    token: ""                          # 或直接填 token(请勿提交到 git)
+    task_id: "3439799346990943525"     # 签到任务 id (qiaodao1)
+    event_code: "SJ50001"              # 签到事件编码
+    scene_code: "signInScene"
+    actions:
+      sign: true                       # 每日自动签到
+      blind_box: true                  # 自动领取(打包)未领取盲盒
+      blind_box_max: 1                 # 每次最多领取数量(取最旧的)
+
+  # 微信小程序渠道账号(明文 token 走加密通道同样可用, 见 .env):
+  #  - actions.content_task=true 时, run 会补做任务中心『分享内容 SJ50005』
+  #    与『浏览内容 SJ50006』(以当日积分流水判断是否已入账, 幂等)
+  - name: 微信老号
+    phone: ""                          # member 接口不回显手机号, 可留空
+    token_env: JETOUR_WX_TOKEN_1
+    task_id: "3439799346990943525"
+    event_code: "SJ50001"
+    scene_code: "signInScene"
+    actions:
+      sign: true                       # 每日自动签到
+      blind_box: false                 # 不领盲盒
+      content_task: true               # 每日补做分享/浏览任务
+      # read_content:                  # 可选: 覆盖浏览上报的帖子(默认捷途新闻官置顶帖)
+      #   content_user_id: "..."
+      #   content_user_name: "..."
+      #   content_id: "..."
+      #   content_title: "..."
+
+  - name: 微信新号
+    phone: ""
+    token_env: JETOUR_WX_TOKEN_2
+    task_id: "3439799346990943525"
+    event_code: "SJ50001"
+    scene_code: "signInScene"
+    actions:
+      sign: true
+      blind_box: false
+      content_task: true
+
+options:
+  state_dir: state                     # 运行状态 / 历史输出目录
+  dashboard_file: sign-data.json       # 兼容旧面板的汇总文件
+  history_limit: 365                   # 保留历史天数
+  request_timeout: 30

@@ -1,0 +1,135 @@
+{
+  "tasks": [
+    {
+      "taskId": "3258940541899046860",
+      "taskCode": "jingping1",
+      "taskName": "发布精品帖",
+      "taskDesc": "捷途币+300，旅行值+5",
+      "icon": "https://chery-jtapp.obs.cn-east-3.myhuaweicloud.com/${obs.root.task}/lQLPJxbR3x4du61ISLCaHqz68Al3qgNY63vdgJEA_72_72.png",
+      "ruleType": 2,
+      "sort": 7,
+      "status": 0,
+      "linkedUrl": "ContentPostPage",
+      "equityTypeList": [2, 1],
+      "taskEventRules": [
+        {
+          "eventCode": "SJ50004",
+          "eventName": "设置动态类型",
+          "properties": [
+            {
+              "name": "动态类型",
+              "code": "content_type",
+              "symbol": "=",
+              "type": "enum",
+              "value": "精品帖"
+            }
+          ],
+          "expression": "content_type.equals(\"精品帖\")"
+        }
+      ]
+    },
+    {
+      "taskId": "3258940541899046778",
+      "taskCode": "jinghua1",
+      "taskName": "发布精华帖",
+      "taskDesc": "捷途币+2000，旅行值+5",
+      "icon": "https://chery-jtapp.obs.cn-east-3.myhuaweicloud.com/${obs.root.task}/lQLPJxbR3x4du61ISLCaHqz68Al3qgNY63vdgJEA_72_72.png",
+      "ruleType": 2,
+      "sort": 8,
+      "status": 0,
+      "linkedUrl": "ContentPostPage",
+      "equityTypeList": [2, 1],
+      "taskEventRules": [
+        {
+          "eventCode": "SJ50004",
+          "eventName": "设置动态类型",
+          "properties": [
+            {
+              "name": "动态类型",
+              "code": "content_type",
+              "symbol": "=",
+              "type": "enum",
+              "value": "精华帖"
+            }
+          ],
+          "expression": "content_type.equals(\"精华帖\")"
+        }
+      ]
+    },
+    {
+      "taskId": "4161002730552751464",
+      "taskCode": "PLBZD2",
+      "taskName": "设为精选评论送积分",
+      "taskDesc": "成为动态精选评论，捷途币+5",
+      "icon": "https://chery-jtapp.obs.cn-east-3.myhuaweicloud.com/${obs.root.task}/lQLPJxbR3x4du61ISLCaHqz68Al3qgNY63vdgJEA_72_72.png",
+      "ruleType": 2,
+      "sort": 9,
+      "status": 0,
+      "linkedUrl": "ContentCommentPage ",
+      "equityTypeList": [2],
+      "taskEventRules": [
+        {
+          "eventCode": "SJ50018",
+          "eventName": "评论被置顶",
+          "properties": [],
+          "expression": null
+        }
+      ]
+    },
+    {
+      "taskId": "3258935594096716377",
+      "taskCode": "nrbtjli",
+      "taskName": "内容官方推荐",
+      "taskDesc": "旅行值+5",
+      "icon": "https://chery-jtapp.obs.cn-east-3.myhuaweicloud.com/${obs.root.task}/lQLPJxbR3x4du61ISLCaHqz68Al3qgNY63vdgJEA_72_72.png",
+      "ruleType": 2,
+      "sort": 9,
+      "status": 0,
+      "linkedUrl": "ContentPostPage",
+      "equityTypeList": [1],
+      "taskEventRules": [
+        {
+          "eventCode": "SJ20011",
+          "eventName": "动态被加精",
+          "properties": [],
+          "expression": null
+        }
+      ]
+    },
+    {
+      "taskId": "3528871127554592939",
+      "taskCode": "xianjinpxiaofei",
+      "taskName": "商城消费（现金）",
+      "taskDesc": "每消费10元+1旅行值",
+      "icon": "https://chery-jtapp.obs.cn-east-3.myhuaweicloud.com/${obs.root.task}/任务图标.png",
+      "ruleType": 2,
+      "sort": 12,
+      "status": 0,
+      "linkedUrl": "jumpMallTab.jump?index=2",
+      "equityTypeList": [1],
+      "taskEventRules": [
+        {
+          "eventCode": "SJ00003",
+          "eventName": "商城购物实付现金奖励",
+          "properties": [
+            {
+              "name": "订单类型",
+              "code": "order_type",
+              "symbol": "!=",
+              "type": "enum",
+              "value": "整车商品"
+            },
+            {
+              "name": "订单类型",
+              "code": "order_type",
+              "symbol": "!=",
+              "type": "enum",
+              "value": "备件商品"
+            }
+          ],
+          "expression": "!order_type.equals(\"整车商品\") && (!order_type.equals(\"备件商品\"))"
+        }
+      ]
+    }
+  ]
+}

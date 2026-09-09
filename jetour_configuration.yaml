@@ -6,44 +6,35 @@ rest_command:
     url: https://mobile-consumer.jetour.com.cn/web/task/sign/sign-record
     method: GET
     params:
-      access_token: "jTAd44hVSuVUFBe5iAIAaQAAAAAAAAAE"
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
       taskId: "3439799346990943525"
       monthInYear: "{{ now().strftime('%Y%m') }}"
     headers:
       Host: "mobile-consumer.jetour.com.cn"
       Accept: "*/*"
-      Sec-Fetch-Site: "same-site"
       Accept-Encoding: "gzip, deflate, br"
-      Accept-Language: "zh-CN,zh"
-      Sec-Fetch-Mode: "cors"
-      Content-Type: "application/json"
-      Origin: "https://h5-app.jetour.com.cn"
-      Referer: "https://h5-app.jetour.com.cn/"
+      Accept-Language: "zh-CN,zh;q=0.9"
       Connection: "keep-alive"
-      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
-      Sec-Fetch-Dest: "empty"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://servicewechat.com/wx31f7e5e3081d6927/226/page-frame.html"
     verify_ssl: true
     timeout: 30
   
+  # 签到相关端点 - 获取签到页面信息，包括签到奖励和连续签到天数
   jetour_sign_page:
     url: https://mobile-consumer.jetour.com.cn/web/task/sign/sign-page
     method: GET
     params:
-      access_token: "jTAd44hVSuVUFBe5iAIAaQAAAAAAAAAE"
+      sceneCode: "signInScene"
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
       taskId: "3439799346990943525"
     headers:
       Host: "mobile-consumer.jetour.com.cn"
       Accept: "*/*"
-      Sec-Fetch-Site: "same-site"
       Accept-Encoding: "gzip, deflate, br"
-      Accept-Language: "zh-CN,zh"
-      Sec-Fetch-Mode: "cors"
-      Content-Type: "application/json"
-      Origin: "https://h5-app.jetour.com.cn"
-      Referer: "https://h5-app.jetour.com.cn/"
       Connection: "keep-alive"
-      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
-      Sec-Fetch-Dest: "empty"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
     verify_ssl: true
     timeout: 30
   
@@ -53,19 +44,218 @@ rest_command:
     params:
       sceneCode: "signInScene"
       terminal: "4"
-      access_token: "jTAd44hVSuVUFBe5iAIAaQAAAAAAAAAE"
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
     headers:
       Host: "mobile-consumer.jetour.com.cn"
       Accept: "*/*"
-      Sec-Fetch-Site: "same-site"
       Accept-Encoding: "gzip, deflate, br"
-      Accept-Language: "zh-CN,zh"
-      Sec-Fetch-Mode: "cors"
-      Content-Type: "application/json"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
       Origin: "https://h5-app.jetour.com.cn"
       Referer: "https://h5-app.jetour.com.cn/"
+    verify_ssl: true
+    timeout: 30
+  
+  # 新添加的 API 端点
+  jetour_member_detail:
+    url: https://mobile-consumer.jetour.com.cn/web/member/consumer/detail
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
       Connection: "keep-alive"
-      User-Agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ios/1.0.0"
-      Sec-Fetch-Dest: "empty"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+    verify_ssl: true
+    timeout: 30
+  
+  jetour_member_level:
+    url: https://mobile-consumer.jetour.com.cn/web/member/consumer/level
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+      cardAccountId: "${{ secrets.JETOUR_CARD_ACCOUNT_ID }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+    verify_ssl: true
+    timeout: 30
+  
+  jetour_owner_vins:
+    url: https://mobile-consumer.jetour.com.cn/web/car-service/owner/vins
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+    verify_ssl: true
+    timeout: 30
+  
+  # 补签卡相关端点 - 获取用户的补签卡数量
+  jetour_sign_regret_card:
+    url: https://mobile-consumer.jetour.com.cn/web/task/sign/regret-card
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+    verify_ssl: true
+    timeout: 30
+  
+  jetour_block_drop_details:
+    url: https://mobile-consumer.jetour.com.cn/web/block-drop/details
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+      # 根据之前的搜索结果，这个端点需要code参数
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+    verify_ssl: true
+    timeout: 30
+  
+  # 获取所有盲盒详情 - 返回用户的所有盲盒信息，包括打开和未打开的
+  # open: 1 表示已打开，open: 0 表示未打开
+  jetour_blind_box_paging:
+    url: https://mobile-consumer.jetour.com.cn/web/rights/blind-box/user/paging
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+    verify_ssl: true
+    timeout: 30
+  
+  # 获取盲盒数量统计 - 返回用户的盲盒总数、已打开的数量和未打开的数量
+  jetour_blind_box_count:
+    url: https://mobile-consumer.jetour.com.cn/web/rights/blind-box/user/count
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+    verify_ssl: true
+    timeout: 30
+  
+  jetour_blind_box_receive:
+    url: https://mobile-consumer.jetour.com.cn/web/rights/blind-box/receive
+    method: PUT
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+      Content-Type: "application/json"
+    verify_ssl: true
+    timeout: 30
+  
+  # 微信小程序登录API，用于获取access_token
+  jetour_mini_login:
+    url: https://miniapp.jetour.com.cn/umbraco/Api/MiniLogin/RegisterAndLogin
+    method: GET
+    params:
+      mobile: "${mobile}"
+      toGoPath: "pages/mine/mine"
+    headers:
+      Host: "miniapp.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Referer: "https://servicewechat.com/wx31f7e5e3081d6927/226/page-frame.html"
+      account: "gh_aafc4b079157"
+      content-type: "application/json;charset=UTF-8"
+    verify_ssl: true
+    timeout: 30
+  
+  # 微信小程序获取用户信息API，用于获取access_token
+  jetour_mini_get_user_info:
+    url: https://miniapp.jetour.com.cn/umbraco/Api/MiniLogin/GetUserInfo
+    method: GET
+    params:
+      account: "gh_aafc4b079157"
+      openId: "${openId}"
+    headers:
+      Host: "miniapp.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Referer: "https://servicewechat.com/wx31f7e5e3081d6927/226/page-frame.html"
+      account: "gh_aafc4b079157"
+      content-type: "application/json;charset=UTF-8"
+    verify_ssl: true
+    timeout: 30
+  
+  # 新添加的 API 端点 - 获取会员等级和权益信息
+  jetour_member_level_with_rights:
+    url: https://mobile-consumer.jetour.com.cn/web/member/consumer/levelWithRights
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+      cardAccountId: "${{ secrets.JETOUR_CARD_ACCOUNT_ID }}"
+      levelRightsId: "6250377670062237834"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
+    verify_ssl: true
+    timeout: 30
+  
+  # 新添加的 API 端点 - 领取权益
+  jetour_receive_rights:
+    url: https://mobile-consumer.jetour.com.cn/web/member/receiveRights
+    method: GET
+    params:
+      access_token: "${{ secrets.JETOUR_ACCESS_TOKEN }}"
+    headers:
+      Host: "mobile-consumer.jetour.com.cn"
+      Accept: "*/*"
+      Accept-Encoding: "gzip, deflate, br"
+      Connection: "keep-alive"
+      User-Agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) UnifiedPCMacWechat(0xf26415f0) XWEB/17078"
+      Origin: "https://h5-app.jetour.com.cn"
+      Referer: "https://h5-app.jetour.com.cn/"
     verify_ssl: true
     timeout: 30

@@ -1,0 +1,45 @@
+name: Jetour 每日自动签到
+
+on:
+  schedule:
+    # 北京时间每天 00:30 (= UTC 16:30), 跨日后第一时间签到
+    - cron: "30 16 * * *"
+  workflow_dispatch: {}
+
+concurrency:
+  group: jetour-sign
+  cancel-in-progress: false
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 执行签到/内容任务/领盲盒
+        env:
+          JETOUR_ACCESS_TOKEN: ${{ secrets.JETOUR_ACCESS_TOKEN }}
+          JETOUR_WX_TOKEN_1: ${{ secrets.JETOUR_WX_TOKEN_1 }}   # 微信老号
+          JETOUR_WX_TOKEN_2: ${{ secrets.JETOUR_WX_TOKEN_2 }}   # 微信新号
+          NOTIFY_WEBHOOK: ${{ secrets.NOTIFY_WEBHOOK }}
+        run: python main.py run
+
+      - name: 上传运行产物(便于失败排查)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jetour-sign-state
+          path: |
+            sign-data.json
+            state/*.jsonl
+            state/run_*.json
+          if-no-files-found: ignore
