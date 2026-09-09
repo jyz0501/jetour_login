@@ -3,7 +3,7 @@
 对捷途会员体系（App / 微信小程序 / H5）「每日签到 / 盲盒 / 积分 / 内容任务」的自动化脚本。
 请求默认走与 App/H5 相同的加密通道（`encryptFlag/encryptParam`，AES-256-CBC，详见 `jetour_crypto.py`）。
 实测小程序渠道签发的明文 `access_token` 经该加密通道同样有效，因此接入新账号无需区分渠道。
-另外已确认网关鉴权只看 token，`account`/OpenID header 与手机号均非必需（手机号仅用于登录换 token）。
+网关鉴权只看 `access_token`：OpenID 为固定值（无需配置），手机号仅作为 `config.yaml` 中的账号标签（用于区分多账号，不参与任何请求）。Web 面板直接粘贴 token 即可执行，无需手机号/OpenID。
 
 > 仅供个人自动化使用，请遵守捷途平台规则，勿用于商业用途。
 
@@ -62,7 +62,7 @@ python main.py web        # http://localhost:8000
 ```yaml
 accounts:
   - name: 主账号
-    phone: "18663531366"
+    phone: "18663531366"             # 账号标识(区分多账号), 不参与请求
     token_env: JETOUR_ACCESS_TOKEN   # 从环境变量取 token
     task_id: "3439799346990943525"   # 签到任务 id
     event_code: "SJ50001"            # 签到事件编码

@@ -14,9 +14,12 @@ timezone: Asia/Shanghai
 # 收到 JSON: {"title": ..., "desp": ..., "text": ...}
 notify_webhook: ""
 
+# 账号说明: access_token 是唯一请求凭据(OpenID 为固定值, 无需随账号配置)。
+# phone 仅用于面板/日志区分多账号, 不参与任何请求; token 与 token_env 二选一填写即可
+# (均不填时回退 JETOUR_ACCESS_TOKEN)。
 accounts:
   - name: 主账号
-    phone: "18663531366"               # 用于面板匹配, 可不填
+    phone: "18663531366"               # 账号标识(区分多账号用), 可不填
     token_env: JETOUR_ACCESS_TOKEN     # 读取该环境变量作为 access_token
     token: ""                          # 或直接填 token(请勿提交到 git)
     task_id: "3439799346990943525"     # 签到任务 id (qiaodao1)
@@ -31,7 +34,7 @@ accounts:
   #  - actions.content_task=true 时, run 会补做任务中心『分享内容 SJ50005』
   #    与『浏览内容 SJ50006』(以当日积分流水判断是否已入账, 幂等)
   - name: 微信老号
-    phone: ""                          # member 接口不回显手机号, 可留空
+    phone: ""                          # 账号标识(区分多账号用), 可不填
     token_env: JETOUR_WX_TOKEN_1
     task_id: "3439799346990943525"
     event_code: "SJ50001"
@@ -47,7 +50,7 @@ accounts:
       #   content_title: "..."
 
   - name: 微信新号
-    phone: ""
+    phone: ""                          # 账号标识(区分多账号用), 可不填
     token_env: JETOUR_WX_TOKEN_2
     task_id: "3439799346990943525"
     event_code: "SJ50001"

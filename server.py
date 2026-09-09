@@ -5,12 +5,11 @@ server.py
 =========
 Web 操作面板后端(真实执行, 非模拟)。配合 index.html 使用。
 
-启动:  python main.py web            (默认 http://0.0.0.0:8000)
-
-API:
-  POST /api/get-token          {phone}                -> 返回该账号可用的 access_token
-  POST /api/execute-operation  {phone, token, operation}  operation: sign | blind-box | all
+鉴权只认 access_token: 不需要手机号 / OpenID / account header。
+接口:
+  POST /api/execute-operation  {token, operation}   operation: sign | blind-box | all
   GET  /api/status             最新一次运行快照
+启动:  python main.py web            (默认 http://0.0.0.0:8000)
 """
 
 from __future__ import annotations
@@ -24,17 +23,22 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 def create_app(config_path=None):
     from flask import Flask, jsonify, request, send_from_directory
 
-    from automation import load_config, make_client, resolve_token, run_account
+    from automation import load_config, resolve_token, run_account
 
     app = Flask(__name__, static_folder=None)
 
-    def _find_account(cfg, phone=None):
+    def _account_for_token(cfg, token):
+        """按 token 匹配配置账号; 不匹配则用首个账号做模板承载临时 token。"""
         accounts = cfg.get("accounts", []) or []
-        if phone:
-            for acc in accounts:
-                if acc.get("phone") == phone:
-                    return acc
-        return accounts[0] if accounts else None
+        for acc in accounts:
+            if resolve_token(acc) == token:
+                return acc
+        if not accounts:
+            return None
+        template = dict(accounts[0])
+        template["token"] = token
+        template["name"] = f"{template.get('name') or '临时账号'}(临时)"
+        return template
 
     @app.route("/")
     def index():
@@ -44,36 +48,19 @@ def create_app(config_path=None):
     def static_files(path):
         return send_from_directory(BASE_DIR, path)
 
-    @app.route("/api/get-token", methods=["POST"])
-    def api_get_token():
-        try:
-            data = request.get_json(silent=True) or {}
-            cfg = load_config(config_path)
-            acc = _find_account(cfg, data.get("phone"))
-            if not acc:
-                return jsonify({"success": False, "message": "未配置账号"}), 404
-            token = resolve_token(acc)
-            if not token:
-                return jsonify({"success": False,
-                                "message": "该账号未配置 access_token(见 config.yaml)"}), 400
-            return jsonify({"success": True, "token": token,
-                            "message": f"账号 {acc.get('name')} Token 已就绪"})
-        except Exception as exc:  # noqa: BLE001
-            return jsonify({"success": False, "message": str(exc)}), 500
-
     @app.route("/api/execute-operation", methods=["POST"])
     def api_execute_operation():
         try:
             data = request.get_json(silent=True) or {}
-            phone = data.get("phone")
             token = (data.get("token") or "").strip()
             operation = data.get("operation")
+            if len(token) < 10:
+                return jsonify({"success": False,
+                                "message": "请先填写有效的 access_token"}), 400
             cfg = load_config(config_path)
-            acc = _find_account(cfg, phone)
+            acc = _account_for_token(cfg, token)
             if not acc:
                 return jsonify({"success": False, "message": "未配置账号"}), 404
-            if not token or token != resolve_token(acc):
-                return jsonify({"success": False, "message": "Token 无效或不匹配"}), 401
             if operation not in ("sign", "blind-box", "all"):
                 return jsonify({"success": False, "message": "无效的操作类型"}), 400
 
@@ -99,7 +86,8 @@ def create_app(config_path=None):
                     text_parts.append(f"盲盒: 领取 {len(ok)} 个")
             message = "; ".join(text_parts) or "完成"
             return jsonify({"success": bool(result.get("ok", False)),
-                            "message": message, "detail": result})
+                            "name": acc.get("name"), "message": message,
+                            "detail": result})
         except Exception as exc:  # noqa: BLE001
             return jsonify({"success": False, "message": str(exc)}), 500
 

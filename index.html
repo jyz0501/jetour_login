@@ -51,34 +51,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">用户操作</h2>
             <div class="flex flex-col md:flex-row gap-4">
-                <!-- 手机号输入表单 -->
+                <!-- Access Token 输入 -->
                 <div class="flex-1 bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-medium text-gray-700 mb-2">获取 Access Token</h3>
-                    <form id="get-token-form" class="space-y-4">
+                    <h3 class="font-medium text-gray-700 mb-2">Access Token</h3>
+                    <form id="token-form" class="space-y-4">
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">手机号</label>
-                            <input type="tel" id="phone" name="phone" placeholder="请输入手机号" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-                        </div>
-                        <div>
-                            <label for="openId" class="block text-sm font-medium text-gray-700 mb-1">OpenID <span class="text-red-500">*</span></label>
-                            <input type="text" id="openId" name="openId" placeholder="请输入微信OpenID" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-                            <p class="mt-1 text-xs text-gray-500">如何获取 OpenID？请参考 <a href="https://blog.csdn.net/hezhezhiyule/article/details/109352740" target="_blank" class="text-primary hover:underline">此文章</a></p>
+                            <label for="access-token" class="block text-sm font-medium text-gray-700 mb-1">粘贴 access_token</label>
+                            <input type="text" id="access-token" name="accessToken" placeholder="粘贴抓包获取的 access_token" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" autocomplete="off" spellcheck="false">
+                            <p class="mt-1 text-xs text-gray-500">鉴权只看 token，无需手机号/OpenID。保存后即可执行右侧操作。</p>
                         </div>
                         <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/90 transition-colors">
-                            获取 Token
+                            保存 Token
                         </button>
                     </form>
-                    <!-- 显示结果提示和复制按钮 -->
                     <div id="token-result" class="mt-4 text-sm hidden"></div>
-                    <div id="token-display" class="mt-4 hidden">
-                        <div class="flex items-center justify-between bg-gray-100 p-3 rounded-md">
-                            <input type="text" id="token-value" class="flex-1 bg-transparent border-none outline-none text-sm" readonly>
-                            <button id="copy-token-btn" class="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md hover:bg-primary/90 transition-colors">
-                                复制
-                            </button>
-                        </div>
-                        <p class="mt-2 text-xs text-gray-500" id="copy-success"></p>
-                    </div>
                 </div>
                 
                 <!-- 执行操作按钮 -->
@@ -351,10 +337,10 @@
         
         // 设置事件监听器
         function setupEventListeners() {
-            // 获取 Token 表单提交
-            document.getElementById('get-token-form').addEventListener('submit', function(e) {
+            // Access Token 表单提交
+            document.getElementById('token-form').addEventListener('submit', function(e) {
                 e.preventDefault();
-                getAccessToken();
+                saveToken();
             });
             
             // 执行签到按钮
@@ -372,119 +358,30 @@
                 executeOperation('all');
             });
             
-            // 复制 Token 按钮
-            document.getElementById('copy-token-btn').addEventListener('click', function() {
-                const tokenInput = document.getElementById('token-value');
-                const copySuccess = document.getElementById('copy-success');
-                
-                try {
-                    // 对于隐藏的输入框，使用更可靠的复制方法
-                    tokenInput.select();
-                    document.execCommand('copy');
-                    
-                    // 显示复制成功提示
-                    copySuccess.textContent = 'Token 已复制到剪贴板！';
-                    copySuccess.classList.add('text-green-600');
-                } catch (e) {
-                    // 如果失败，使用另一种方法
-                    const textArea = document.createElement('textarea');
-                    textArea.value = tokenInput.value;
-                    textArea.style.position = 'fixed';
-                    textArea.style.left = '-999999px';
-                    textArea.style.top = '-999999px';
-                    document.body.appendChild(textArea);
-                    textArea.focus();
-                    textArea.select();
-                    try {
-                        document.execCommand('copy');
-                        copySuccess.textContent = 'Token 已复制到剪贴板！';
-                        copySuccess.classList.add('text-green-600');
-                    } catch (err) {
-                        copySuccess.textContent = '复制失败，请手动复制';
-                        copySuccess.classList.add('text-red-600');
-                    }
-                    document.body.removeChild(textArea);
-                }
-                
-                // 3秒后清除提示
-                setTimeout(function() {
-                    copySuccess.textContent = '';
-                    copySuccess.classList.remove('text-green-600');
-                    copySuccess.classList.remove('text-red-600');
-                }, 3000);
-            });
         }
         
-        // 获取 Access Token
-        async function getAccessToken() {
-            const phone = document.getElementById('phone').value;
-            const openId = document.getElementById('openId').value;
+        // 保存 Access Token 到本地(不需要手机号/OpenID)
+        function saveToken() {
+            const input = document.getElementById('access-token');
             const resultDiv = document.getElementById('token-result');
-            
-            if (!phone) {
-                showResult(resultDiv, '请输入手机号', 'error');
-                return;
-            }
-            
-            if (!openId) {
-                showResult(resultDiv, '请输入 OpenID', 'error');
-                return;
-            }
-            
-            showResult(resultDiv, '获取 Token 中...', 'info');
+            const token = input.value.trim();
 
-            
-            try {
-                // 调用后端 API 来获取 Token
-                const response = await fetch('/api/get-token', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        phone: phone,
-                        openId: openId 
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error('网络请求失败');
-                }
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    showResult(resultDiv, data.message, 'success');
-                    
-                    // 存储 Token 到本地存储
-                    localStorage.setItem('jetour_access_token', data.token);
-                    localStorage.setItem('jetour_phone', phone);
-                    
-                    // 显示 Token 显示区域
-                    document.getElementById('token-value').value = data.token;
-                    document.getElementById('token-display').classList.remove('hidden');
-                } else {
-                    showResult(resultDiv, data.message, 'error');
-                    // 隐藏 Token 显示区域
-                    document.getElementById('token-display').classList.add('hidden');
-                }
-                
-            } catch (error) {
-                showResult(resultDiv, `获取 Token 失败: ${error.message}`, 'error');
-                // 隐藏 Token 显示区域
-                document.getElementById('token-display').classList.add('hidden');
-                console.error('获取 Token 出错:', error);
+            if (!token) {
+                showResult(resultDiv, '请粘贴 access_token', 'error');
+                return;
             }
+
+            localStorage.setItem('jetour_access_token', token);
+            showResult(resultDiv, `Token 已保存(长度 ${token.length})，可直接执行右侧操作。`, 'success');
         }
         
         // 执行操作
         async function executeOperation(type) {
             const resultDiv = document.getElementById('operation-result');
             const accessToken = localStorage.getItem('jetour_access_token');
-            const phone = localStorage.getItem('jetour_phone');
             
-            if (!accessToken || !phone) {
-                showResult(resultDiv, '请先获取 Access Token', 'error');
+            if (!accessToken) {
+                showResult(resultDiv, '请先填写并保存 Access Token', 'error');
                 return;
             }
             
